@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Detail Produk - Ajra Batik</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="nav-left">
+
+            <a href="index.html"
+            class="back-btn">
+
+                <i class="fas fa-arrow-left"></i>
+
+            </a>
+
+            <div class="logo">
+
+                <img
+                src="images/logo.png.jpeg"
+                alt="Ajra Batik">
+
+                <h2>Ajra Batik</h2>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- DETAIL -->
+
+    <section class="detail-section">
+
+        <div class="detail-container">
+
+            <!-- GALERI -->
+
+            <div class="detail-gallery">
+
+                <img
+                id="mainImage"
+                class="main-image">
+
+                <div
+                id="thumbnailContainer"
+                class="thumbnail-container">
+
+                </div>
+
+            </div>
+
+            <!-- INFO -->
+
+            <div class="detail-info">
+
+                <h1 id="detailName">
+                </h1>
+
+                <p
+                id="detailCategory"
+                class="detail-category">
+
+                </p>
+
+                <h2
+                id="detailPrice"
+                class="detail-price">
+
+                </h2>
+
+                <p
+                id="detailStock"
+                class="detail-stock">
+
+                </p>
+
+                <div class="detail-description">
+
+                    <h3>
+                        Deskripsi Produk
+                    </h3>
+
+                    <p id="detailDescription">
+                    </p>
+
+                </div>
+
+                <div class="detail-buttons">
+
+                    <button
+                    class="add-cart-btn"
+                    onclick="addDetailToCart()">
+
+                        Tambah Keranjang
+
+                    </button>
+
+                    <button
+                    class="buy-now-btn"
+                    onclick="buyNow()">
+
+                        Beli Sekarang
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- TOAST -->
+
+    <div id="toast" class="toast">
+
+        <i class="fas fa-circle-check"></i>
+
+        <span id="toastText">
+        </span>
+
+    </div>
+
+    <script
+type="module"
+src="product.js">
+</script>
+
+</body>
+
+</html>

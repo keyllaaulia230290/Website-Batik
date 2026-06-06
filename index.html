@@ -1,118 +1,315 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AjraBatik Cirebon</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajra Batik</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-
-  <!-- Loading -->
-  <div id="loader">
-    <div class="spinner"></div>
-    <p>AjraBatik Cirebon</p>
-  </div>
-
-  <main class="container">
-
-    <section class="profile">
-      <div class="logo-box">
-        <img src="assets/logo.jpeg" alt="AjraBatik Logo">
-      </div>
-
-      <h1>AjraBatik Cirebon</h1>
-      <p class="subtitle">Batik Elegan • Khas Cirebon</p>
-    </section>
-
-    <section class="links">
-      <a href="https://wa.me/628112422774" target="_blank" class="link-card">
-        <div>
-          <i class="fa-brands fa-whatsapp"></i>
-          Whatsapp
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">
+        <button class="mobile-menu" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+            <img
+                src="images/logo.png.jpeg"
+                alt="Ajra Batik">
+            <h2>Ajra Batik</h2>
         </div>
-        <span>→</span>
-      </a>
-
-      <a href="https://shopee.co.id/batikqolbi" target="_blank" class="link-card">
-        <div>
-          <i class="fa-solid fa-bag-shopping"></i>
-          Shopee
-        </div>
-        <span>→</span>
-      </a>
-
-      <a href="https://www.tiktok.com/@batikqolbi" target="_blank" class="link-card">
-        <div>
-          <i class="fa-brands fa-tiktok"></i>
-          TikTok
-        </div>
-        <span>→</span>
-      </a>
-
-      <a href="https://www.instagram.com/ajrabatik" class="link-card">
-        <div>
-          <i class="fa-brands fa-instagram"></i>
-          Instagram
-        </div>
-        <span>→</span>
-      </a>
-    </section>
-
-    <section class="stats">
-  <div>
-    <h3 class="counter" data-target="50">0</h3>
-    <p>Customer</p>
-  </div>
-
-  <div>
-    <h3 class="counter" data-target="49">0</h3>
-    <p>Rating 4.9</p>
-  </div>
-
-  <div>
-    <h3 class="counter" data-target="2022">0</h3>
-    <p>Since</p>
-  </div>
-</section>
-
-
-
-<!-- Testimoni -->
-<section class="testimonial-section">
-  <h2>Testimoni Customer</h2>
-
-  <div class="testimonial-wrapper">
-    <div class="testimonial-track">
-      <div class="testimonial-card">"Bahannya adem banget, motifnya elegan. Recommended!" ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Packing rapi & pengiriman cepat. Suka banget." ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Udah repeat order 3x, kualitas konsisten." ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Warnanya mewah, cocok buat acara formal." ⭐⭐⭐⭐⭐</div>
-
-      <!-- duplicate -->
-      <div class="testimonial-card">"Bahannya adem banget, motifnya elegan. Recommended!" ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Packing rapi & pengiriman cepat. Suka banget." ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Udah repeat order 3x, kualitas konsisten." ⭐⭐⭐⭐⭐</div>
-      <div class="testimonial-card">"Warnanya mewah, cocok buat acara formal." ⭐⭐⭐⭐⭐</div>
     </div>
-  </div>
+    <ul class="nav-links">
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+        <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <a
+        href="#"
+        onclick="toggleCart()"
+        class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cartCount">0</span>
+    </a>
+</nav>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>
+            Batik Premium Untuk Gaya Modern Indonesia
+        </h1>
+        <p>
+            Koleksi Batik Berkualitas Dengan Motif Elegan dan Harga Terjangkau
+        </p>
+        <a href="#produk" class="hero-btn">
+            Belanja Sekarang
+        </a>
+    </div>
+</section>
+<!-- KATEGORI -->
+<section class="category-section">
+
+    <div
+    class="category-card"
+    onclick="filterCategory('all')">
+
+        Semua
+
+    </div>
+
+    <div
+    class="category-card"
+    onclick="filterCategory('premium')">
+
+        Premium
+
+    </div>
+
+    <div
+    class="category-card"
+    onclick="filterCategory('katun')">
+
+        Katun
+
+    </div>
+
+    <div
+    class="category-card"
+    onclick="filterCategory('rayon')">
+
+        Rayon
+
+    </div>
+
+    <div
+    class="category-card"
+    onclick="filterCategory('modern')">
+
+        Modern
+
+    </div>
+
+    <div
+    class="category-card"
+    onclick="filterCategory('tradisional')">
+
+        Tradisional
+
+    </div>
+
 </section>
 
-    <footer>
-      © 2025 AjraBatik Cirebon
-    </footer>
+<!-- SEARCH -->
+<section class="search-section">
+    <h2>
+        Temukan Produk Favoritmu
+    </h2>
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari produk..."
+            onkeyup="searchProduct()">
+    </div>
+</section>
+<!-- PRODUK -->
+<section id="produk">
+    <div class="section-header">
+        <h2>
+            Produk Terbaru
+        </h2>
+        <p>
+            Pilihan Batik Terbaik Untuk Berbagai Acara
+        </p>
+    </div>
+    <div id="productList" class="product-grid"></div>
 
-  </main>
+<div
+id="pagination"
+class="pagination">
 
-  <script src="script.js"></script>
+</div>
+</section>
+<!-- FITUR -->
+<section class="features">
+    <div class="feature-card">
+        <i class="fas fa-shirt"></i>
+        <h3>
+            Batik Berkualitas
+        </h3>
+        <p>
+            Menggunakan bahan premium dan nyaman dipakai.
+        </p>
+    </div>
+    <div class="feature-card">
+        <i class="fas fa-truck-fast"></i>
+        <h3>
+            Pengiriman Cepat
+        </h3>
+        <p>
+            Pesanan diproses dan dikirim dengan cepat.
+        </p>
+    </div>
+    <div class="feature-card">
+        <i class="fas fa-tag"></i>
+        <h3>
+            Harga Terjangkau
+        </h3>
+        <p>
+            Kualitas terbaik dengan harga yang bersahabat.
+        </p>
+    </div>
+</section>
+<!-- TENTANG -->
+<section id="tentang" class="about">
+    <h2>
+        Tentang Ajra Batik
+    </h2>
+    <p>
+        Ajra Batik hadir untuk menghadirkan produk batik modern dan tradisional
+        dengan kualitas terbaik. Kami percaya bahwa batik adalah warisan budaya
+        yang harus tetap tampil elegan dan relevan di berbagai generasi.
+    </p>
+</section>
+<!-- KONTAK -->
+<section id="kontak" class="contact">
 
-  <div class="particles"></div>
+    <h2>Hubungi Kami</h2>
+
+    <div class="contact-list">
+
+        <a
+        href="https://wa.me/6285864478882"
+        target="_blank"
+        class="contact-item">
+
+            <i class="fab fa-whatsapp"></i>
+
+            <span>
+                WhatsApp 
+            </span>
+
+        </a>
+
+        <a
+        href="https://instagram.com/ajrabatik"
+        target="_blank"
+        class="contact-item">
+
+            <i class="fab fa-instagram"></i>
+
+            <span>
+                Instagram
+            </span>
+
+        </a>
+
+        <a
+        href="https://www.tiktok.com/@ajrabatik"
+        target="_blank"
+        class="contact-item">
+
+            <i class="fab fa-tiktok"></i>
+
+            <span>
+                TikTok 
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+<!-- SIDEBAR KERANJANG -->
+<div
+    id="cartSidebar"
+    class="cart-sidebar">
+    <div class="cart-header">
+        <h2>
+            Keranjang Belanja
+        </h2>
+        <button
+            class="close-cart"
+            onclick="toggleCart()">
+            ×
+        </button>
+    </div>
+    <div
+        id="cartItems"
+        class="cart-items">
+    </div>
+    <div class="cart-footer">
+        <div class="promo-box">
+            <input
+                type="text"
+                id="promoCode"
+                placeholder="Masukkan kode promo">
+            <button onclick="applyPromo()">
+                Gunakan
+            </button>
+        </div>
+        <p id="promoMessage"></p>
+        <h3>
+            Total :
+            Rp <span id="totalPrice">0</span>
+        </h3>
+        <button
+            class="checkout-btn"
+            onclick="checkoutWhatsapp()">
+            Checkout WhatsApp
+        </button>
+    </div>
+</div>
+<!-- OVERLAY -->
+<div
+    id="overlay"
+    class="overlay"
+    onclick="toggleCart()">
+</div>
+<!-- FOOTER -->
+<footer>
+    <h3>Ajra Batik</h3>
+    <p>
+        Batik Modern & Tradisional Berkualitas
+    </p>
+    <p>
+        © 2026 Ajra Batik
+    </p>
+</footer>
+<script>
+    function toggleCart() {
+        document
+            .getElementById("cartSidebar")
+            .classList
+            .toggle("active");
+        document
+            .getElementById("overlay")
+            .classList
+            .toggle("active");
+    }
+    function toggleMenu() {
+        document
+            .querySelector(".nav-links")
+            .classList
+            .toggle("active");
+    }
+</script>
+<script
+type="module"
+src="app.js">
+</script>
+
+<div id="toast" class="toast">
+    <i class="fas fa-circle-check"></i>
+    <span id="toastText"></span>
+</div>
+
 </body>
 </html>

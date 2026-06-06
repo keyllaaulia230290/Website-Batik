@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Ajra Batik</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+
+    <div id="loginPage" class="login-page">
+
+        <div class="login-box">
+
+            <h1>Ajra Batik</h1>
+
+            <p>Admin Panel</p>
+
+            <input
+            type="text"
+            id="username"
+            placeholder="Username">
+
+            <input
+            type="password"
+            id="password"
+            placeholder="Password">
+
+            <button onclick="loginAdmin()">
+                Login
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div id="adminPanel" class="admin-panel">
+
+        <!-- HEADER -->
+
+        <header class="admin-header">
+
+            <h2>
+                Ajra Batik Admin
+            </h2>
+
+            <button
+            class="logout-btn"
+            onclick="logoutAdmin()">
+
+                Logout
+
+            </button>
+
+        </header>
+
+        <!-- FORM PRODUK -->
+
+        <section class="admin-section">
+
+            <h3>
+                Tambah / Edit Produk
+            </h3>
+
+            <div class="form-grid">
+
+                <input
+                type="hidden"
+                id="productId">
+
+                <input
+                type="text"
+                id="productName"
+                placeholder="Nama Produk">
+
+                <select id="productCategory">
+
+                    <option value="">
+                        Pilih Kategori
+                    </option>
+
+                    <option value="premium">
+                        Batik Premium
+                    </option>
+
+                    <option value="katun">
+                        Batik Katun
+                    </option>
+
+                    <option value="rayon">
+                        Batik Rayon
+                    </option>
+
+                    <option value="modern">
+                        Motif Modern
+                    </option>
+
+                    <option value="tradisional">
+                        Motif Tradisional
+                    </option>
+
+                </select>
+
+                <input
+                type="number"
+                id="productPrice"
+                placeholder="Harga">
+
+                <input
+                type="number"
+                id="productStock"
+                placeholder="Stok">
+
+                <input
+                type="file"
+                id="productImages"
+                multiple
+                accept="image/*">
+
+                <textarea
+id="productDescription"
+placeholder="Deskripsi produk"
+rows="5"></textarea>
+
+            </div>
+
+            <button
+            class="save-btn"
+            onclick="saveProduct()">
+
+                Simpan Produk
+
+            </button>
+
+        </section>
+
+        <!-- DAFTAR PRODUK -->
+
+        <section class="admin-section">
+
+            <h3>
+                Daftar Produk
+            </h3>
+
+            <div
+            id="adminProductList"
+            class="admin-product-list">
+
+            </div>
+
+        </section>
+
+        <!-- PROMO -->
+
+        <section class="admin-section">
+
+            <h3>
+                Promo Code
+            </h3>
+
+            <div class="promo-form">
+
+                <input
+                type="text"
+                id="promoName"
+                placeholder="Kode Promo">
+
+                <input
+                type="number"
+                id="promoDiscount"
+                placeholder="Potongan Harga">
+
+                <button onclick="addPromo()">
+                    Tambah Promo
+                </button>
+
+            </div>
+
+            <div
+            id="promoList">
+
+            </div>
+
+        </section>
+
+        <!-- PESANAN -->
+
+        <section class="admin-section">
+
+            <h3>
+                Riwayat Pesanan
+            </h3>
+
+            <div
+            id="orderList">
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script
+type="module"
+src="admin.js">
+</script>
+
+</body>
+
+</html>
