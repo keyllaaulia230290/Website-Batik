@@ -1,5 +1,15 @@
+import {
+
+db,
+collection,
+getDocs
+
+}
+
+from "./firebase.js";
+
 /* ==========================
-   AMBIL ID PRODUK
+GET ID URL
 ========================== */
 
 const params =
@@ -8,76 +18,41 @@ window.location.search
 );
 
 const productId =
-Number(params.get("id"));
+params.get("id");
 
 /* ==========================
-   DATA PRODUK
+LOAD PRODUCT
 ========================== */
 
-let products =
-JSON.parse(
-localStorage.getItem("products")
+async function loadProduct(){
+
+let product = null;
+
+const querySnapshot =
+await getDocs(
+collection(
+db,
+"products"
+)
 );
 
-/* fallback kalau localStorage kosong */
+querySnapshot.forEach(doc=>{
 
-if(
-!Array.isArray(products)
-||
-products.length === 0
-){
+if(doc.id === productId){
 
-products = [
+product = {
 
-{
-    id:1,
-    name:"Batik Premium Sogan",
-    category:"premium",
-    price:150000,
-    stock:10,
-    image:"images/batik1.jpg",
-    description:
-    "Kain batik premium kualitas terbaik."
-},
+id:doc.id,
 
-{
-    id:2,
-    name:"Batik Katun Mega Mendung",
-    category:"katun",
-    price:175000,
-    stock:8,
-    image:"images/batik2.jpg",
-    description:
-    "Batik katun adem dan nyaman."
-},
+...doc.data()
 
-{
-    id:3,
-    name:"Batik Rayon Floral",
-    category:"rayon",
-    price:200000,
-    stock:5,
-    image:"images/batik3.jpg",
-    description:
-    "Kain rayon lembut dan jatuh."
-}
-
-];
+};
 
 }
 
-/* ==========================
-   CARI PRODUK
-========================== */
+});
 
-const product =
-products.find(
-p => p.id === productId
-);
-
-/* ==========================
-   JIKA PRODUK TIDAK ADA
-========================== */
+/* NOT FOUND */
 
 if(!product){
 
@@ -99,7 +74,7 @@ Produk tidak ditemukan
 
 <a href="index.html">
 
-Kembali ke Beranda
+Kembali
 
 </a>
 
@@ -107,24 +82,11 @@ Kembali ke Beranda
 
 `;
 
-}
-
-/* ==========================
-   FORMAT RUPIAH
-========================== */
-
-function rupiah(number){
-
-return number
-.toLocaleString("id-ID");
+return;
 
 }
 
-/* ==========================
-   TAMPILKAN PRODUK
-========================== */
-
-function loadProduct(){
+/* RENDER */
 
 document.getElementById(
 "detailName"
@@ -141,7 +103,9 @@ document.getElementById(
 "detailPrice"
 ).textContent =
 "Rp " +
-rupiah(product.price);
+product.price.toLocaleString(
+"id-ID"
+);
 
 document.getElementById(
 "detailStock"
@@ -155,6 +119,8 @@ document.getElementById(
 product.description ||
 "Tidak ada deskripsi";
 
+/* IMAGE */
+
 const mainImage =
 document.getElementById(
 "mainImage"
@@ -165,48 +131,106 @@ document.getElementById(
 "thumbnailContainer"
 );
 
-/* SUPPORT 1 ATAU BANYAK FOTO */
-
-const images =
-product.images ||
-[product.image];
-
 mainImage.src =
-images[0];
+product.images?.[0];
 
 thumbnailContainer.innerHTML =
 "";
 
-images.forEach(image=>{
+product.images?.forEach(image=>{
 
 thumbnailContainer.innerHTML += `
 
 <img
 src="${image}"
 class="thumbnail"
-onclick="changeImage('${image}')">
+onclick="
+changeImage(
+'${image}'
+)
+">
 
 `;
 
 });
 
+/* CART */
+
+window.addDetailToCart =
+function(){
+
+let cart =
+JSON.parse(
+localStorage.getItem(
+"cart"
+)
+) || [];
+
+cart.push(product);
+
+localStorage.setItem(
+
+"cart",
+
+JSON.stringify(cart)
+
+);
+
+showToast(
+"Berhasil ditambahkan"
+);
+
+};
+
+/* BUY NOW */
+
+window.buyNow =
+function(){
+
+let message =
+
+`Halo Ajra Batik,
+
+Saya ingin membeli:
+
+${product.name}
+
+Harga:
+Rp ${product.price.toLocaleString("id-ID")}
+
+`;
+
+const nomorAdmin =
+"6285864478882";
+
+window.open(
+
+`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`,
+
+"_blank"
+
+);
+
+};
+
 }
 
 /* ==========================
-   GANTI FOTO
+CHANGE IMAGE
 ========================== */
 
-function changeImage(image){
+window.changeImage =
+function(image){
 
 document.getElementById(
 "mainImage"
 ).src =
 image;
 
-}
+};
 
 /* ==========================
-   TOAST
+TOAST
 ========================== */
 
 function showToast(message){
@@ -239,67 +263,7 @@ toast.classList.remove(
 }
 
 /* ==========================
-   TAMBAH KERANJANG
-========================== */
-
-function addDetailToCart(){
-
-let cart =
-JSON.parse(
-localStorage.getItem("cart")
-) || [];
-
-cart.push(product);
-
-localStorage.setItem(
-
-"cart",
-
-JSON.stringify(cart)
-
-);
-
-showToast(
-product.name +
-" berhasil ditambahkan"
-);
-
-}
-
-/* ==========================
-   BELI SEKARANG
-========================== */
-
-function buyNow(){
-
-let message =
-
-`Halo Ajra Batik,
-
-Saya ingin membeli:
-
-${product.name}
-
-Harga:
-Rp ${rupiah(product.price)}
-
-`;
-
-const nomorAdmin =
-"6285864478882";
-
-window.open(
-
-`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`,
-
-"_blank"
-
-);
-
-}
-
-/* ==========================
-   LOAD
+LOAD
 ========================== */
 
 loadProduct();
