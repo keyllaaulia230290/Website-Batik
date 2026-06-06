@@ -23,28 +23,43 @@
 
     <nav class="navbar">
 
-        <div class="nav-left">
+    <div class="nav-left">
 
-            <a href="index.html"
-            class="back-btn">
+        <a href="index.html"
+        class="back-btn">
 
-                <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-left"></i>
 
-            </a>
+        </a>
 
-            <div class="logo">
+        <div class="logo">
 
-                <img
-                src="images/logo.png.jpeg"
-                alt="Ajra Batik">
+            <img
+            src="images/logo.png.jpeg"
+            alt="Ajra Batik">
 
-                <h2>Ajra Batik</h2>
-
-            </div>
+            <h2>Ajra Batik</h2>
 
         </div>
 
-    </nav>
+    </div>
+
+    <!-- CART -->
+
+    <div
+    class="detail-cart"
+    onclick="toggleCart()">
+
+        <i class="fas fa-shopping-cart">
+        </i>
+
+        <span id="cartCount">
+            0
+        </span>
+
+    </div>
+
+</nav>
 
     <!-- DETAIL -->
 
@@ -129,6 +144,65 @@
         </div>
 
     </section>
+
+    <!-- CART SIDEBAR -->
+
+<div
+id="cartSidebar"
+class="cart-sidebar">
+
+    <div class="cart-header">
+
+        <h2>
+            Keranjang Belanja
+        </h2>
+
+        <button
+        class="close-cart"
+        onclick="toggleCart()">
+
+            ×
+
+        </button>
+
+    </div>
+
+    <div
+    id="cartItems"
+    class="cart-items">
+
+    </div>
+
+    <div class="cart-footer">
+
+        <h3>
+
+            Total :
+            Rp
+            <span id="totalPrice">
+                0
+            </span>
+
+        </h3>
+
+        <button
+        class="checkout-btn"
+        onclick="window.checkoutWhatsapp()">
+
+            Checkout WhatsApp
+
+        </button>
+
+    </div>
+
+</div>
+
+<div
+id="overlay"
+class="overlay"
+onclick="toggleCart()">
+
+</div>
 
     <!-- TOAST -->
 

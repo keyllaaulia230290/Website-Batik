@@ -476,3 +476,53 @@ LOAD
 loadProducts();
 
 updateCart();
+
+window.checkoutWhatsapp =
+function(){
+
+if(cart.length === 0){
+
+alert(
+"Keranjang masih kosong"
+);
+
+return;
+
+}
+
+let total = 0;
+
+let message =
+"Halo Ajra Batik,%0A%0ASaya ingin memesan:%0A%0A";
+
+cart.forEach(item=>{
+
+message +=
+`• ${item.name}
+ (Rp ${item.price.toLocaleString("id-ID")})
+%0A`;
+
+total += item.price;
+
+});
+
+total -= discount;
+
+if(total < 0){
+total = 0;
+}
+
+message +=
+`%0A--------------------`;
+
+message +=
+`%0ATotal : Rp ${total.toLocaleString("id-ID")}`;
+
+const nomorAdmin =
+"6285864478882";
+
+window.location.href =
+
+`https://wa.me/${nomorAdmin}?text=${message}`;
+
+};
