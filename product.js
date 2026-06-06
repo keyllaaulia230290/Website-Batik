@@ -203,13 +203,12 @@ Rp ${product.price.toLocaleString("id-ID")}
 const nomorAdmin =
 "6285864478882";
 
-window.open(
+const waUrl =
 
-`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`,
+`https://api.whatsapp.com/send?phone=${nomorAdmin}&text=${encodeURIComponent(message)}`;
 
-"_blank"
-
-);
+window.location.href =
+waUrl;
 
 };
 
