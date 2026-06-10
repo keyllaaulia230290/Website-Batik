@@ -20,6 +20,7 @@ localStorage.getItem("cart")
 ) || [];
 
 let discount = 0;
+let discountPercent = 0;
 
 const productsPerPage = 10;
 
@@ -321,10 +322,19 @@ Hapus
 
 });
 
-total -= discount;
+/* HITUNG DISKON */
 
-if(total < 0){
-total = 0;
+discount =
+(total * discountPercent)
+/ 100;
+
+/* FINAL TOTAL */
+
+let finalTotal =
+total - discount;
+
+if(finalTotal < 0){
+finalTotal = 0;
 }
 
 if(cartCount){
@@ -337,7 +347,7 @@ cart.length;
 if(totalPrice){
 
 totalPrice.textContent =
-total.toLocaleString(
+finalTotal.toLocaleString(
 "id-ID"
 );
 
@@ -435,6 +445,75 @@ renderProducts(filtered);
 };
 
 /* ==========================
+PROMO CODE
+========================== */
+
+window.applyPromo =
+function(){
+
+const promoInput =
+document.getElementById(
+"promoCode"
+);
+
+const promoMessage =
+document.getElementById(
+"promoMessage"
+);
+
+if(!promoInput) return;
+
+const code =
+promoInput.value
+.trim()
+.toUpperCase();
+
+/* RESET */
+
+discount = 0;
+discountPercent = 0;
+
+/* PROMO */
+
+if(code === "AJRA10"){
+
+discountPercent = 10;
+
+promoMessage.textContent =
+"Promo berhasil! Diskon 10%";
+
+promoMessage.style.color =
+"green";
+
+}
+
+else if(code === "AJRA5"){
+
+discountPercent = 5;
+
+promoMessage.textContent =
+"Promo berhasil! Diskon 5%";
+
+promoMessage.style.color =
+"green";
+
+}
+
+else{
+
+promoMessage.textContent =
+"Kode promo tidak valid";
+
+promoMessage.style.color =
+"red";
+
+}
+
+updateCart();
+
+};
+
+/* ==========================
 TOAST
 ========================== */
 
@@ -506,6 +585,12 @@ total += item.price;
 
 });
 
+/* APPLY PROMO */
+
+discount =
+(total * discountPercent)
+/ 100;
+
 total -= discount;
 
 if(total < 0){
@@ -514,6 +599,10 @@ total = 0;
 
 message +=
 `%0A--------------------`;
+
+message +=
+`%0ADiskon (${discountPercent}%)
+: Rp ${discount.toLocaleString("id-ID")}`;
 
 message +=
 `%0ATotal : Rp ${total.toLocaleString("id-ID")}`;
