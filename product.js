@@ -17,6 +17,7 @@ params.get("id");
 GLOBAL PRODUCT
 ========================== */
 let currentProduct = null;
+let detailQty = 1;
 /* ==========================
 LOAD PRODUCT
 ========================== */
@@ -123,49 +124,81 @@ thumbnailContainer
 .appendChild(img);
 });
 }
+
+/* ==========================
+DETAIL QTY
+========================== */
+
+window.increaseDetailQty = function(){
+
+    detailQty++;
+
+    document.getElementById(
+        "detailQty"
+    ).textContent = detailQty;
+
+};
+
+window.decreaseDetailQty = function(){
+
+    if(detailQty > 1){
+
+        detailQty--;
+
+        document.getElementById(
+            "detailQty"
+        ).textContent = detailQty;
+
+    }
+
+};
+
 /* ==========================
 ADD CART
 ========================== */
-window.addDetailToCart =
-function(){
 
-if(!currentProduct){
-return;
-}
+window.addDetailToCart = function(){
 
-/* GET CART */
+    if(!currentProduct) return;
 
-let cart =
-JSON.parse(
-localStorage.getItem(
-"cart"
-)
-) || [];
+    let cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
 
-/* PUSH PRODUCT */
+    const existing =
+    cart.find(
+        item => item.id === currentProduct.id
+    );
 
-cart.push(currentProduct);
+    if(existing){
 
-/* SAVE */
+        existing.qty =
+        (existing.qty || 1) + detailQty;
 
-localStorage.setItem(
+    }else{
 
-"cart",
+        cart.push({
 
-JSON.stringify(cart)
+            ...currentProduct,
 
-);
+            qty:detailQty
 
-/* UPDATE UI */
+        });
 
-updateCart();
+    }
 
-/* SUCCESS */
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
 
-showToast(
-`${currentProduct.name}
-berhasil ditambahkan`
-);
+    updateCart();
+
+    showToast(
+        detailQty +
+        " pcs ditambahkan"
+    );
 
 };
 /* ==========================
@@ -173,19 +206,37 @@ BUY NOW
 ========================== */
 window.buyNow =
 function(){
+
 if(!currentProduct)
 return;
+
+const subtotal =
+
+currentProduct.price
+* detailQty;
+
 let message =
+
 `Halo Ajra Batik,
+
 Saya ingin membeli:
+
 ${currentProduct.name}
-Harga:
-Rp ${currentProduct.price.toLocaleString("id-ID")}
+
+Jumlah:
+${detailQty} pcs
+
+Total:
+Rp ${subtotal.toLocaleString("id-ID")}
 `;
+
 const nomorAdmin =
 "6285864478882";
+
 window.location.href =
+
 `https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`;
+
 };
 /* ==========================
 TOAST

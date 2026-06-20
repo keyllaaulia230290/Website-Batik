@@ -1,12 +1,4 @@
-import {
-
-db,
-collection,
-getDocs
-
-}
-
-from "./firebase.js";
+import { db, collection, getDocs } from "./firebase.js";
 
 /* ==========================
 DATA
@@ -14,10 +6,7 @@ DATA
 
 let products = [];
 
-let cart =
-JSON.parse(
-localStorage.getItem("cart")
-) || [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 let discount = 0;
 let discountPercent = 0;
@@ -30,70 +19,43 @@ let currentPage = 1;
 LOAD PRODUK FIREBASE
 ========================== */
 
-async function loadProducts(){
+async function loadProducts() {
+  products = [];
 
-products = [];
+  const querySnapshot = await getDocs(collection(db, "products"));
 
-const querySnapshot =
-await getDocs(
-collection(
-db,
-"products"
-)
-);
+  querySnapshot.forEach((doc) => {
+    products.push({
+      id: doc.id,
 
-querySnapshot.forEach(doc=>{
+      ...doc.data(),
+    });
+  });
 
-products.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-});
-
-renderProducts();
-
+  renderProducts();
 }
 
 /* ==========================
 RENDER PRODUK
 ========================== */
 
-function renderProducts(
-data = products
-){
+function renderProducts(data = products) {
+  const productList = document.getElementById("productList");
 
-const productList =
-document.getElementById(
-"productList"
-);
+  const pagination = document.getElementById("pagination");
 
-const pagination =
-document.getElementById(
-"pagination"
-);
+  if (!productList) return;
 
-if(!productList) return;
+  productList.innerHTML = "";
 
-productList.innerHTML =
-"";
+  const start = (currentPage - 1) * productsPerPage;
 
-const start =
-(currentPage - 1)
-* productsPerPage;
+  const end = start + productsPerPage;
 
-const end =
-start + productsPerPage;
+  const paginatedProducts = data.slice(start, end);
 
-const paginatedProducts =
-data.slice(start,end);
-
-paginatedProducts.forEach(product=>{
-
-productList.innerHTML += `
+  paginatedProducts.forEach((product) => {
+    productList.innerHTML += `
 
 <div
 class="product-card"
@@ -107,9 +69,7 @@ Stok ${product.stock}
 </div>
 
 <img
-src="${
-product.images?.[0]
-}"
+src="${product.images?.[0]}"
 alt="${product.name}">
 
 <div class="product-content">
@@ -139,45 +99,29 @@ Tambah Keranjang
 </div>
 
 `;
+  });
 
-});
-
-renderPagination(data);
-
+  renderPagination(data);
 }
 
 /* ==========================
 PAGINATION
 ========================== */
 
-function renderPagination(data){
+function renderPagination(data) {
+  const pagination = document.getElementById("pagination");
 
-const pagination =
-document.getElementById(
-"pagination"
-);
+  if (!pagination) return;
 
-if(!pagination) return;
+  pagination.innerHTML = "";
 
-pagination.innerHTML =
-"";
+  const totalPages = Math.ceil(data.length / productsPerPage);
 
-const totalPages =
-Math.ceil(
-data.length /
-productsPerPage
-);
-
-for(let i=1;i<=totalPages;i++){
-
-pagination.innerHTML += `
+  for (let i = 1; i <= totalPages; i++) {
+    pagination.innerHTML += `
 
 <button
-class="${
-i === currentPage
-? "active"
-: ""
-}"
+class="${i === currentPage ? "active" : ""}"
 
 onclick="
 changePage(${i})
@@ -188,88 +132,66 @@ ${i}
 </button>
 
 `;
-
+  }
 }
 
-}
+window.changePage = function (page) {
+  currentPage = page;
 
-window.changePage =
-function(page){
+  renderProducts();
 
-currentPage = page;
-
-renderProducts();
-
-window.scrollTo({
-
-top:600,
-behavior:"smooth"
-
-});
-
+  window.scrollTo({
+    top: 600,
+    behavior: "smooth",
+  });
 };
 
 /* ==========================
 ADD TO CART
 ========================== */
 
-window.addToCart =
-function(id){
+window.addToCart = function (id) {
+  const product = products.find((p) => p.id === id);
 
-const product =
-products.find(
-p => p.id === id
-);
+  if (!product) return;
 
-if(!product) return;
+  const existing = cart.find((item) => item.id === id);
 
-cart.push(product);
+  if (existing) {
+    existing.qty = (existing.qty || 1) + 1;
+  } else {
+    cart.push({
+      ...product,
+      qty: 1,
+    });
+  }
 
-localStorage.setItem(
-"cart",
-JSON.stringify(cart)
-);
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-showToast(
-product.name +
-" berhasil ditambahkan"
-);
+  showToast(product.name + " ditambahkan");
 
-updateCart();
-
+  updateCart();
 };
 
 /* ==========================
 UPDATE CART
 ========================== */
 
-function updateCart(){
+function updateCart() {
+  const cartItems = document.getElementById("cartItems");
 
-const cartItems =
-document.getElementById(
-"cartItems"
-);
+  const cartCount = document.getElementById("cartCount");
 
-const cartCount =
-document.getElementById(
-"cartCount"
-);
+  const totalPrice = document.getElementById("totalPrice");
 
-const totalPrice =
-document.getElementById(
-"totalPrice"
-);
+  if (!cartItems) return;
 
-if(!cartItems) return;
+  cartItems.innerHTML = "";
 
-cartItems.innerHTML =
-"";
+  let total = 0;
 
-let total = 0;
-
-if(cart.length === 0){
-
-cartItems.innerHTML = `
+  if (cart.length === 0) {
+    cartItems.innerHTML = `
 
 <div class="empty-cart">
 
@@ -282,14 +204,14 @@ Keranjang masih kosong
 </div>
 
 `;
+  }
 
-}
+  cart.forEach((item, index) => {
+    const qty = item.qty || 1;
 
-cart.forEach((item,index)=>{
+    total += item.price * qty;
 
-total += item.price;
-
-cartItems.innerHTML += `
+    cartItems.innerHTML += `
 
 <div class="cart-item">
 
@@ -301,16 +223,33 @@ ${item.name}
 
 <br>
 
-Rp
-${item.price.toLocaleString("id-ID")}
+Rp ${item.price.toLocaleString("id-ID")}
+
+<br><br>
+
+<div class="qty-box">
+
+<button
+onclick="decreaseQty(${index})">
+-
+</button>
+
+<span>
+${qty}
+</span>
+
+<button
+onclick="increaseQty(${index})">
++
+</button>
+
+</div>
 
 </div>
 
 <button
 class="remove-btn"
-onclick="
-removeCart(${index})
-">
+onclick="removeCart(${index})">
 
 Hapus
 
@@ -319,233 +258,162 @@ Hapus
 </div>
 
 `;
+  });
 
-});
+  /* HITUNG DISKON */
 
-/* HITUNG DISKON */
+  discount = (total * discountPercent) / 100;
 
-discount =
-(total * discountPercent)
-/ 100;
+  /* FINAL TOTAL */
 
-/* FINAL TOTAL */
+  let finalTotal = total - discount;
 
-let finalTotal =
-total - discount;
+  if (finalTotal < 0) {
+    finalTotal = 0;
+  }
 
-if(finalTotal < 0){
-finalTotal = 0;
-}
+  if (cartCount) {
+    cartCount.textContent = cart.length;
+  }
 
-if(cartCount){
-
-cartCount.textContent =
-cart.length;
-
-}
-
-if(totalPrice){
-
-totalPrice.textContent =
-finalTotal.toLocaleString(
-"id-ID"
-);
-
-}
-
+  if (totalPrice) {
+    totalPrice.textContent = finalTotal.toLocaleString("id-ID");
+  }
 }
 
 /* ==========================
 REMOVE CART
 ========================== */
 
-window.removeCart =
-function(index){
+window.removeCart = function (index) {
+  cart.splice(index, 1);
 
-cart.splice(index,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-localStorage.setItem(
-"cart",
-JSON.stringify(cart)
-);
+  updateCart();
+};
 
-updateCart();
+window.increaseQty = function (index) {
+  cart[index].qty = (cart[index].qty || 1) + 1;
 
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCart();
+};
+
+window.decreaseQty = function (index) {
+  if ((cart[index].qty || 1) > 1) {
+    cart[index].qty--;
+  } else {
+    cart.splice(index, 1);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCart();
 };
 
 /* ==========================
 SEARCH
 ========================== */
 
-window.searchProduct =
-function(){
+window.searchProduct = function () {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
 
-const keyword =
-document
-.getElementById(
-"searchInput"
-)
-.value
-.toLowerCase();
+  const filtered = products.filter((product) =>
+    product.name.toLowerCase().includes(keyword),
+  );
 
-const filtered =
-products.filter(product=>
-
-product.name
-.toLowerCase()
-.includes(keyword)
-
-);
-
-renderProducts(filtered);
-
+  renderProducts(filtered);
 };
 
 /* ==========================
 FILTER CATEGORY
 ========================== */
 
-window.filterCategory =
-function(category){
+window.filterCategory = function (category) {
+  document.querySelectorAll(".category-card").forEach((card) => {
+    card.classList.remove("active");
+  });
 
-document
-.querySelectorAll(
-".category-card"
-)
-.forEach(card=>{
+  if (event) {
+    event.target.classList.add("active");
+  }
 
-card.classList.remove(
-"active"
-);
+  if (category === "all") {
+    renderProducts(products);
 
-});
+    return;
+  }
 
-event.target.classList.add(
-"active"
-);
+  const filtered = products.filter(
+    (product) =>
+      product.category &&
+      product.category.toLowerCase() === category.toLowerCase(),
+  );
 
-if(category === "all"){
-
-renderProducts(products);
-
-return;
-
-}
-
-const filtered =
-products.filter(product=>
-
-product.category ===
-category
-
-);
-
-renderProducts(filtered);
-
+  renderProducts(filtered);
 };
 
 /* ==========================
 PROMO CODE
 ========================== */
 
-window.applyPromo =
-function(){
+window.applyPromo = function () {
+  const promoInput = document.getElementById("promoCode");
 
-const promoInput =
-document.getElementById(
-"promoCode"
-);
+  const promoMessage = document.getElementById("promoMessage");
 
-const promoMessage =
-document.getElementById(
-"promoMessage"
-);
+  if (!promoInput) return;
 
-if(!promoInput) return;
+  const code = promoInput.value.trim().toUpperCase();
 
-const code =
-promoInput.value
-.trim()
-.toUpperCase();
+  /* RESET */
 
-/* RESET */
+  discount = 0;
+  discountPercent = 0;
 
-discount = 0;
-discountPercent = 0;
+  /* PROMO */
 
-/* PROMO */
+  if (code === "HAPPYJUNE") {
+    discountPercent = 6;
 
-if(code === "AJRA10"){
+    promoMessage.textContent = "Promo berhasil! Diskon 6%";
 
-discountPercent = 10;
+    promoMessage.style.color = "green";
+  } else if (code === "HappyJune") {
+    discountPercent = 6;
 
-promoMessage.textContent =
-"Promo berhasil! Diskon 10%";
+    promoMessage.textContent = "Promo berhasil! Diskon 6%";
 
-promoMessage.style.color =
-"green";
+    promoMessage.style.color = "green";
+  } else {
+    promoMessage.textContent = "Kode promo tidak valid";
 
-}
+    promoMessage.style.color = "red";
+  }
 
-else if(code === "AJRA5"){
-
-discountPercent = 5;
-
-promoMessage.textContent =
-"Promo berhasil! Diskon 5%";
-
-promoMessage.style.color =
-"green";
-
-}
-
-else{
-
-promoMessage.textContent =
-"Kode promo tidak valid";
-
-promoMessage.style.color =
-"red";
-
-}
-
-updateCart();
-
+  updateCart();
 };
 
 /* ==========================
 TOAST
 ========================== */
 
-function showToast(message){
+function showToast(message) {
+  const toast = document.getElementById("toast");
 
-const toast =
-document.getElementById(
-"toast"
-);
+  const toastText = document.getElementById("toastText");
 
-const toastText =
-document.getElementById(
-"toastText"
-);
+  if (!toast) return;
 
-if(!toast) return;
+  toastText.textContent = message;
 
-toastText.textContent =
-message;
+  toast.classList.add("show");
 
-toast.classList.add(
-"show"
-);
-
-setTimeout(()=>{
-
-toast.classList.remove(
-"show"
-);
-
-},2500);
-
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
 }
 
 /* ==========================
@@ -556,62 +424,46 @@ loadProducts();
 
 updateCart();
 
-window.checkoutWhatsapp =
-function(){
+window.checkoutWhatsapp = function () {
+  if (cart.length === 0) {
+    alert("Keranjang masih kosong");
 
-if(cart.length === 0){
+    return;
+  }
 
-alert(
-"Keranjang masih kosong"
-);
+  let total = 0;
 
-return;
+  let message = "Halo Ajra Batik,%0A%0ASaya ingin memesan:%0A%0A";
 
-}
+  cart.forEach((item) => {
+    const qty = item.qty || 1;
 
-let total = 0;
-
-let message =
-"Halo Ajra Batik,%0A%0ASaya ingin memesan:%0A%0A";
-
-cart.forEach(item=>{
-
-message +=
-`• ${item.name}
- (Rp ${item.price.toLocaleString("id-ID")})
+    message += `• ${item.name}
+(${qty} pcs)
+Rp ${item.price.toLocaleString("id-ID")}
 %0A`;
 
-total += item.price;
+    total += item.price * qty;
+  });
 
-});
+  /* APPLY PROMO */
 
-/* APPLY PROMO */
+  discount = (total * discountPercent) / 100;
 
-discount =
-(total * discountPercent)
-/ 100;
+  total -= discount;
 
-total -= discount;
+  if (total < 0) {
+    total = 0;
+  }
 
-if(total < 0){
-total = 0;
-}
+  message += `%0A--------------------`;
 
-message +=
-`%0A--------------------`;
-
-message +=
-`%0ADiskon (${discountPercent}%)
+  message += `%0ADiskon (${discountPercent}%)
 : Rp ${discount.toLocaleString("id-ID")}`;
 
-message +=
-`%0ATotal : Rp ${total.toLocaleString("id-ID")}`;
+  message += `%0ATotal : Rp ${total.toLocaleString("id-ID")}`;
 
-const nomorAdmin =
-"6285864478882";
+  const nomorAdmin = "6285864478882";
 
-window.location.href =
-
-`https://wa.me/${nomorAdmin}?text=${message}`;
-
+  window.location.href = `https://wa.me/${nomorAdmin}?text=${message}`;
 };

@@ -119,25 +119,43 @@
 
                 </div>
 
-                <div class="detail-buttons">
+<div class="qty-selector">
 
-                    <button
-                    class="add-cart-btn"
-                    onclick="addDetailToCart()">
+    <button
+    onclick="decreaseDetailQty()">
+    -
+    </button>
 
-                        Tambah Keranjang
+    <span id="detailQty">
+    1
+    </span>
 
-                    </button>
+    <button
+    onclick="increaseDetailQty()">
+    +
+    </button>
 
-                    <button
-                    class="buy-now-btn"
-                    onclick="buyNow()">
+</div>
 
-                        Beli Sekarang
+<div class="detail-buttons">
 
-                    </button>
+    <button
+    class="add-cart-btn"
+    onclick="addDetailToCart()">
 
-                </div>
+        Tambah Keranjang
+
+    </button>
+
+    <button
+    class="buy-now-btn"
+    onclick="buyNow()">
+
+        Beli Sekarang
+
+    </button>
+
+</div>
 
             </div>
 
