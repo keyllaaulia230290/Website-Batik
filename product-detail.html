@@ -19,151 +19,267 @@
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
-    <nav class="navbar">
+<nav class="navbar">
 
     <div class="nav-left">
 
-        <a href="index.html"
-        class="back-btn">
-
-            <i class="fas fa-arrow-left"></i>
-
-        </a>
-
-        <div class="logo">
+        <a href="index.html" class="logo">
 
             <img
             src="images/logo.png.jpeg"
             alt="Ajra Batik">
 
-            <h2>Ajra Batik</h2>
+            <div class="logo-text">
 
-        </div>
+                <h2>Ajra Batik</h2>
+
+                <small>
+                    Premium Batik Indonesia
+                </small>
+
+            </div>
+
+        </a>
 
     </div>
 
-    <!-- CART -->
+    <ul class="nav-links">
 
-    <div
-    class="detail-cart"
-    onclick="toggleCart()">
+        <li>
 
-        <i class="fas fa-shopping-cart">
-        </i>
+            <a href="index.html">
 
-        <span id="cartCount">
-            0
-        </span>
+                Beranda
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="index.html#produk">
+
+                Produk
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="index.html#tentang">
+
+                Tentang
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="index.html#kontak">
+
+                Kontak
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    <div class="nav-right">
+
+        <a href="index.html" class="search-btn">
+
+            <i class="fas fa-arrow-left"></i>
+
+        </a>
+
+        <button
+        class="cart-icon"
+        onclick="toggleCart()">
+
+            <i class="fas fa-shopping-bag"></i>
+
+            <span id="cartCount">
+
+                0
+
+            </span>
+
+        </button>
 
     </div>
 
 </nav>
 
-    <!-- DETAIL -->
+<!-- =========================
+     PRODUCT DETAIL
+========================= -->
 
-    <section class="detail-section">
+<section class="detail-section">
 
-        <div class="detail-container">
+    <div class="detail-container">
 
-            <!-- GALERI -->
+        <!-- LEFT -->
 
-            <div class="detail-gallery">
+        <div class="detail-left">
 
-                <img
-                id="mainImage"
-                class="main-image">
+            <img
+            id="mainImage"
+            class="main-image">
 
-                <div
-                id="thumbnailContainer"
-                class="thumbnail-container">
-
-                </div>
-
-            </div>
-
-            <!-- INFO -->
-
-            <div class="detail-info">
-
-                <h1 id="detailName">
-                </h1>
-
-                <p
-                id="detailCategory"
-                class="detail-category">
-
-                </p>
-
-                <h2
-                id="detailPrice"
-                class="detail-price">
-
-                </h2>
-
-                <p
-                id="detailStock"
-                class="detail-stock">
-
-                </p>
-
-                <div class="detail-description">
-
-                    <h3>
-                        Deskripsi Produk
-                    </h3>
-
-                    <p id="detailDescription">
-                    </p>
-
-                </div>
-
-<div class="qty-selector">
-
-    <button
-    onclick="decreaseDetailQty()">
-    -
-    </button>
-
-    <span id="detailQty">
-    1
-    </span>
-
-    <button
-    onclick="increaseDetailQty()">
-    +
-    </button>
-
-</div>
-
-<div class="detail-buttons">
-
-    <button
-    class="add-cart-btn"
-    onclick="addDetailToCart()">
-
-        Tambah Keranjang
-
-    </button>
-
-    <button
-    class="buy-now-btn"
-    onclick="buyNow()">
-
-        Beli Sekarang
-
-    </button>
-
-</div>
+            <div
+            id="thumbnailContainer"
+            class="thumbnail-container">
 
             </div>
 
         </div>
 
-    </section>
+        <!-- RIGHT -->
 
-    <!-- CART SIDEBAR -->
+        <div class="detail-right">
+
+            <span
+            id="detailCategory"
+            class="detail-category">
+            </span>
+
+            <h1
+            id="detailName"
+            class="detail-title">
+            </h1>
+
+            <div class="detail-rating">
+
+                <span>⭐ 4.9</span>
+
+                
+
+            </div>
+
+            <div
+            id="detailPrice"
+            class="detail-price">
+            </div>
+
+           <div class="product-information">
+
+    <h3>
+
+        Informasi Produk
+
+    </h3>
+
+    <div class="info-row">
+
+        <span>Kategori</span>
+
+        <strong id="detailCategory"></strong>
+
+    </div>
+
+    <div class="info-row">
+
+        <span>Bahan</span>
+
+        <strong id="detailMaterial"></strong>
+
+    </div>
+
+    <div class="info-row">
+
+        <span>Stok</span>
+
+        <strong id="detailStock"></strong>
+
+    </div>
+
+    <div class="info-row">
+
+        <span>Pengiriman</span>
+
+        <strong id="detailShipping"></strong>
+
+    </div>
+
+</div>
+
+            <div class="qty-wrapper">
+
+                <h3>Jumlah</h3>
+
+                <div class="qty-selector">
+
+                    <button onclick="decreaseDetailQty()">
+                        -
+                    </button>
+
+                    <span id="detailQty">
+                        1
+                    </span>
+
+                    <button onclick="increaseDetailQty()">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="detail-buttons">
+
+                <button
+                class="add-cart-btn"
+                onclick="addDetailToCart()">
+
+                    <i class="fas fa-shopping-cart"></i>
+
+                    Tambah Keranjang
+
+                </button>
+
+                <button
+                class="buy-now-btn"
+                onclick="buyNow()">
+
+                    <i class="fas fa-bolt"></i>
+
+                    Beli Sekarang
+
+                </button>
+
+            </div>
+
+            <div class="detail-description">
+
+                <h3>
+
+                    Deskripsi Produk
+
+                </h3>
+
+                <p id="detailDescription">
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CART SIDEBAR
+========================= -->
 
 <div
 id="cartSidebar"
@@ -171,15 +287,29 @@ class="cart-sidebar">
 
     <div class="cart-header">
 
-        <h2>
-            Keranjang Belanja
-        </h2>
+        <div>
+
+            <h2>
+
+                <i class="fas fa-shopping-bag"></i>
+
+                Keranjang
+
+            </h2>
+
+            <small>
+
+                Produk pilihanmu
+
+            </small>
+
+        </div>
 
         <button
         class="close-cart"
         onclick="toggleCart()">
 
-            ×
+            <i class="fas fa-xmark"></i>
 
         </button>
 
@@ -193,27 +323,81 @@ class="cart-sidebar">
 
     <div class="cart-footer">
 
-        <h3>
+        <div class="promo-card">
 
-            Total :
-            Rp
-            <span id="totalPrice">
-                0
-            </span>
+            <label>
 
-        </h3>
+                <i class="fas fa-ticket"></i>
+
+                Kode Promo
+
+            </label>
+
+            <div class="promo-box">
+
+                <input
+                id="promoCode"
+                type="text"
+                placeholder="Masukkan kode promo">
+
+                <button
+                onclick="applyPromo()">
+
+                    Gunakan
+
+                </button>
+
+            </div>
+
+            <small
+            id="promoMessage">
+
+            </small>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-row">
+
+                <span>
+
+                    Total Belanja
+
+                </span>
+
+                <strong>
+
+                    Rp
+                    <span id="totalPrice">
+
+                        0
+
+                    </span>
+
+                </strong>
+
+            </div>
+
+        </div>
 
         <button
         class="checkout-btn"
         onclick="window.checkoutWhatsapp()">
 
-            Checkout WhatsApp
+            <i class="fab fa-whatsapp"></i>
+
+            Checkout via WhatsApp
 
         </button>
 
     </div>
 
 </div>
+
+<!-- =========================
+     OVERLAY
+========================= -->
 
 <div
 id="overlay"
@@ -222,22 +406,29 @@ onclick="toggleCart()">
 
 </div>
 
-    <!-- TOAST -->
+<!-- =========================
+     TOAST
+========================= -->
 
-    <div id="toast" class="toast">
+<div
+id="toast"
+class="toast">
 
-        <i class="fas fa-circle-check"></i>
+    <i class="fas fa-circle-check"></i>
 
-        <span id="toastText">
-        </span>
+    <span id="toastText">
 
-    </div>
+    </span>
 
-    <script
+</div>
+
+<script
 type="module"
 src="product.js">
+
 </script>
 
 </body>
 
 </html>
+

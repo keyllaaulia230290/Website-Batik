@@ -195,6 +195,12 @@ window.saveProduct = async function () {
 
   const description = document.getElementById("productDescription").value;
 
+  const material =
+document.getElementById("productMaterial").value;
+
+const shipping =
+document.getElementById("productShipping").value;
+
   const files = document.getElementById("productImages").files;
 
   if (!name || !category || !price || !stock) {
@@ -227,6 +233,9 @@ window.saveProduct = async function () {
 
         stock: Number(stock),
 
+        material,
+        shipping,
+
         description,
 
         images,
@@ -247,6 +256,9 @@ window.saveProduct = async function () {
         price: Number(price),
 
         stock: Number(stock),
+
+        material,
+        shipping,
 
         description,
 
@@ -282,6 +294,12 @@ window.editProduct = function (firebaseId) {
   document.getElementById("productStock").value = product.stock;
 
   document.getElementById("productDescription").value = product.description;
+
+  document.getElementById("productMaterial").value =
+product.material;
+
+document.getElementById("productShipping").value =
+product.shipping;
 
   window.scrollTo({
     top: 0,
@@ -321,4 +339,10 @@ function resetForm() {
   document.getElementById("productDescription").value = "";
 
   document.getElementById("productImages").value = "";
+
+  document.getElementById("productMaterial").value =
+product.material;
+
+document.getElementById("productShipping").value =
+product.shipping;
 }

@@ -10,175 +10,553 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<!-- NAVBAR -->
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <nav class="navbar">
+
     <div class="nav-left">
-        <button class="mobile-menu" onclick="toggleMenu()">
+
+        <button
+        class="mobile-menu"
+        onclick="toggleMenu()">
+
             <i class="fas fa-bars"></i>
+
         </button>
-        <div class="logo">
+
+        <a href="#" class="logo">
+
             <img
-                src="images/logo.png.jpeg"
-                alt="Ajra Batik">
-            <h2>Ajra Batik</h2>
-        </div>
+            src="images/logo.png.jpeg"
+            alt="Ajra Batik">
+
+            <div class="logo-text">
+
+                <h2>Ajra Batik</h2>
+
+                <small>
+                    Premium Batik Indonesia
+                </small>
+
+            </div>
+
+        </a>
+
     </div>
+
     <ul class="nav-links">
-        <li><a href="#">Beranda</a></li>
-        <li><a href="#produk">Produk</a></li>
-        <li><a href="#tentang">Tentang</a></li>
-        <li><a href="#kontak">Kontak</a></li>
-        <li><a href="admin.html">Admin</a></li>
+
+        <li>
+            <a href="#">
+                Beranda
+            </a>
+        </li>
+
+        <li>
+            <a href="#produk">
+                Produk
+            </a>
+        </li>
+
+        <li>
+            <a href="#tentang">
+                Tentang
+            </a>
+        </li>
+
+        <li>
+            <a href="#kontak">
+                Kontak
+            </a>
+        </li>
+
     </ul>
-    <a
-        href="#"
-        onclick="toggleCart()"
-        class="cart-icon">
+
+<div class="nav-right">
+
+
+    <a href="#" onclick="toggleCart(); return false;" class="cart-icon">
         <i class="fas fa-shopping-cart"></i>
         <span id="cartCount">0</span>
     </a>
+
+</div>
+
 </nav>
-<!-- HERO -->
+
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero">
+
+    <div class="hero-overlay"></div>
+
     <div class="hero-content">
+
+        <span class="hero-badge">
+
+            ✦ BATIK PREMIUM INDONESIA
+
+        </span>
+
         <h1>
-            Batik Premium Untuk Gaya Modern Indonesia
+
+            Siap Dikirim
+            Ke Seluruh Dunia
+
         </h1>
+
         <p>
-            Koleksi Batik Berkualitas Dengan Motif Elegan dan Harga Terjangkau
+
+            Temukan koleksi Batik Premium
+            dengan kualitas terbaik,
+            nyaman dipakai,
+            dan cocok untuk segala acara.
+
         </p>
-        <a href="#produk" class="hero-btn">
-            Belanja Sekarang
-        </a>
+
+        <div class="hero-buttons">
+
+            <a
+            href="#produk"
+            class="hero-btn">
+
+                Belanja Sekarang
+
+            </a>
+
+            <a
+            href="#tentang"
+            class="hero-outline">
+
+                Tentang Kami
+
+            </a>
+
+        </div>
+
     </div>
+
 </section>
-<!-- KATEGORI -->
+
+<!-- =========================
+     STATISTIC
+========================= -->
+
+
+
+<!-- =========================
+     CATEGORY
+========================= -->
+
 <section class="category-section">
 
-<div class="category-card"
-onclick="filterCategory('all')">
-Semua
-</div>
+    <div class="category-header">
 
-<div class="category-card"
-onclick="filterCategory('katun')">
-Katun
-</div>
+        <span>
+            KATEGORI
+        </span>
 
-<div class="category-card"
-onclick="filterCategory('viscose')">
-Viscose
-</div>
-
-<div class="category-card"
-onclick="filterCategory('tulis')">
-Tulis
-</div>
-
-<div class="category-card"
-onclick="filterCategory('cap')">
-Cap
-</div>
-
-<div class="category-card"
-onclick="filterCategory('paris')">
-Paris
-</div>
-
-<div class="category-card"
-onclick="filterCategory('dobby')">
-Dobby
-</div>
-
-<div class="category-card"
-onclick="filterCategory('wanita')">
-Wanita
-</div>
-
-<div class="category-card"
-onclick="filterCategory('pria')">
-Pria
-</div>
-
-</section>
-
-<!-- SEARCH -->
-<section class="search-section">
-    <h2>
-        Temukan Produk Favoritmu
-    </h2>
-    <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Cari produk..."
-            onkeyup="searchProduct()">
-    </div>
-</section>
-<!-- PRODUK -->
-<section id="produk">
-    <div class="section-header">
         <h2>
-            Produk Terbaru
+            Pilih Berdasarkan Kategori
         </h2>
-        <p>
-            Pilihan Batik Terbaik Untuk Berbagai Acara
-        </p>
+
     </div>
-    <div id="productList" class="product-grid"></div>
 
-<div
-id="pagination"
-class="pagination">
+    <div class="category-wrapper">
 
-</div>
+        <button class="category-card active"
+        onclick="filterCategory('all')">
+
+            <i class="fa-solid fa-border-all"></i>
+
+            Semua
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('katun')">
+
+            <i class="fa-solid fa-shirt"></i>
+
+            Katun
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('viscose')">
+
+            <i class="fa-solid fa-shirt"></i>
+
+            Viscose
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('tulis')">
+
+            <i class="fa-solid fa-pen-nib"></i>
+
+            Batik Tulis
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('cap')">
+
+            <i class="fa-solid fa-stamp"></i>
+
+            Batik Cap
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('paris')">
+
+            <i class="fa-solid fa-gem"></i>
+
+            Paris
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('dobby')">
+
+            <i class="fa-solid fa-crown"></i>
+
+            Dobby
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('wanita')">
+
+            <i class="fa-solid fa-person-dress"></i>
+
+            Wanita
+
+        </button>
+
+        <button class="category-card"
+        onclick="filterCategory('pria')">
+
+            <i class="fa-solid fa-user"></i>
+
+            Pria
+
+        </button>
+
+    </div>
+
 </section>
-<!-- FITUR -->
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<section class="search-section">
+
+    <div class="search-card">
+
+        <span>
+
+            TEMUKAN PRODUK
+
+        </span>
+
+        <h2>
+
+            Cari Batik Favoritmu
+
+        </h2>
+
+        <p>
+
+            Temukan produk berdasarkan nama.
+
+        </p>
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+
+            id="searchInput"
+
+            type="text"
+
+            placeholder="Cari produk..."
+
+            onkeyup="searchProduct()">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     PRODUCT
+========================= -->
+
+<section id="produk">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            KOLEKSI TERBARU
+
+        </span>
+
+        <h2>
+
+            Produk Pilihan
+
+        </h2>
+
+        <p>
+
+            Batik premium berkualitas
+            untuk berbagai kebutuhan.
+
+        </p>
+
+    </div>
+
+    <div
+
+    id="productList"
+
+    class="product-grid">
+
+    </div>
+
+    <div
+
+    id="pagination"
+
+    class="pagination">
+
+    </div>
+
+</section>
+
+<!-- =========================
+     FEATURES
+========================= -->
+
 <section class="features">
-    <div class="feature-card">
-        <i class="fas fa-shirt"></i>
-        <h3>
-            Batik Berkualitas
-        </h3>
-        <p>
-            Menggunakan bahan premium dan nyaman dipakai.
-        </p>
-    </div>
-    <div class="feature-card">
-        <i class="fas fa-truck-fast"></i>
-        <h3>
-            Pengiriman Cepat
-        </h3>
-        <p>
-            Pesanan diproses dan dikirim dengan cepat.
-        </p>
-    </div>
-    <div class="feature-card">
-        <i class="fas fa-tag"></i>
-        <h3>
-            Harga Terjangkau
-        </h3>
-        <p>
-            Kualitas terbaik dengan harga yang bersahabat.
-        </p>
-    </div>
-</section>
-<!-- TENTANG -->
-<section id="tentang" class="about">
-    <h2>
-        Tentang Ajra Batik
-    </h2>
-    <p>
-        Ajra Batik hadir untuk menghadirkan produk batik modern dan tradisional
-        dengan kualitas terbaik. Kami percaya bahwa batik adalah warisan budaya
-        yang harus tetap tampil elegan dan relevan di berbagai generasi.
-    </p>
-</section>
-<!-- KONTAK -->
-<section id="kontak" class="contact">
 
-    <h2>Hubungi Kami</h2>
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <i class="fa-solid fa-award"></i>
+
+        </div>
+
+        <h3>
+
+            Premium Quality
+
+        </h3>
+
+        <p>
+
+            Bahan pilihan yang nyaman
+            dipakai sepanjang hari.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <i class="fa-solid fa-truck-fast"></i>
+
+        </div>
+
+        <h3>
+
+            Pengiriman Cepat
+
+        </h3>
+
+        <p>
+
+            Pesanan diproses
+            dengan cepat.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+        </div>
+
+        <h3>
+
+            Garansi Produk
+
+        </h3>
+
+        <p>
+
+            Produk dicek sebelum
+            dikirim ke pelanggan.
+
+        </p>
+
+    </div>
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+
+            <i class="fa-solid fa-headset"></i>
+
+        </div>
+
+        <h3>
+
+            Customer Service
+
+        </h3>
+
+        <p>
+
+            Siap membantu
+            kapan saja.
+
+        </p>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section
+id="tentang"
+class="about">
+
+    <div class="about-image">
+
+        <img
+        src="images/logo.png.jpeg"
+        alt="Ajra Batik">
+
+    </div>
+
+    <div class="about-content">
+
+        <span class="section-tag">
+
+            TENTANG KAMI
+
+        </span>
+
+        <h2>
+
+            Ajra Batik,
+            Perpaduan Tradisi &
+            Gaya Modern
+
+        </h2>
+
+        <p>
+
+            Ajra Batik menghadirkan koleksi batik
+            berkualitas tinggi dengan desain yang
+            elegan dan modern. Kami percaya bahwa
+            batik bukan hanya pakaian, tetapi juga
+            warisan budaya Indonesia yang layak
+            dikenakan oleh semua generasi.
+
+        </p>
+
+        <div class="about-list">
+
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Produk Original
+
+            </div>
+
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Bahan Premium
+
+            </div>
+
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Harga Terjangkau
+
+            </div>
+
+            <div>
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Pengiriman Cepat
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+id="kontak"
+class="contact">
+
+    <div class="section-header">
+
+        <span class="section-tag">
+
+            HUBUNGI KAMI
+
+        </span>
+
+        <h2>
+
+            Kami Siap Membantu
+
+        </h2>
+
+    </div>
 
     <div class="contact-list">
 
@@ -187,11 +565,27 @@ class="pagination">
         target="_blank"
         class="contact-item">
 
-            <i class="fab fa-whatsapp"></i>
+            <div class="contact-icon">
 
-            <span>
-                WhatsApp 
-            </span>
+                <i class="fab fa-whatsapp"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+
+                    WhatsApp
+
+                </strong>
+
+                <p>
+
+                    Chat Admin
+
+                </p>
+
+            </div>
 
         </a>
 
@@ -200,11 +594,27 @@ class="pagination">
         target="_blank"
         class="contact-item">
 
-            <i class="fab fa-instagram"></i>
+            <div class="contact-icon">
 
-            <span>
-                Instagram
-            </span>
+                <i class="fab fa-instagram"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+
+                    Instagram
+
+                </strong>
+
+                <p>
+
+                    @ajrabatik
+
+                </p>
+
+            </div>
 
         </a>
 
@@ -213,100 +623,316 @@ class="pagination">
         target="_blank"
         class="contact-item">
 
-            <i class="fab fa-tiktok"></i>
+            <div class="contact-icon">
 
-            <span>
-                TikTok 
-            </span>
+                <i class="fab fa-tiktok"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+
+                    TikTok
+
+                </strong>
+
+                <p>
+
+                    @ajrabatik
+
+                </p>
+
+            </div>
 
         </a>
 
     </div>
 
 </section>
-<!-- SIDEBAR KERANJANG -->
+
+<!-- =========================
+     SHOPPING CART
+========================= -->
+
 <div
-    id="cartSidebar"
-    class="cart-sidebar">
+id="cartSidebar"
+class="cart-sidebar">
+
     <div class="cart-header">
-        <h2>
-            Keranjang Belanja
-        </h2>
-        <button
-            class="close-cart"
-            onclick="toggleCart()">
-            ×
-        </button>
-    </div>
-    <div
-        id="cartItems"
-        class="cart-items">
-    </div>
-    <div class="cart-footer">
-        <div class="promo-box">
-            <input
-                type="text"
-                id="promoCode"
-                placeholder="Masukkan kode promo">
-            <button onclick="applyPromo()">
-                Gunakan
-            </button>
+
+        <div>
+
+            <h2>
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                Keranjang
+
+            </h2>
+
+            <small>
+
+                Produk pilihanmu
+
+            </small>
+
         </div>
-        <p id="promoMessage"></p>
-        <h3>
-            Total :
-            Rp <span id="totalPrice">0</span>
-        </h3>
+
         <button
-            class="checkout-btn"
-            onclick="window.checkoutWhatsapp()">
-            Checkout WhatsApp
+
+        class="close-cart"
+
+        onclick="toggleCart()">
+
+            <i class="fa-solid fa-xmark"></i>
+
         </button>
+
     </div>
+
+    <div
+
+    id="cartItems"
+
+    class="cart-items">
+
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="promo-card">
+
+            <label>
+
+                <i class="fa-solid fa-ticket"></i>
+
+                Kode Promo
+
+            </label>
+
+            <div class="promo-box">
+
+                <input
+
+                id="promoCode"
+
+                type="text"
+
+                placeholder="Masukkan kode promo">
+
+                <button
+
+                onclick="applyPromo()">
+
+                    Gunakan
+
+                </button>
+
+            </div>
+
+            <small id="promoMessage">
+
+            </small>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-row">
+
+                <span>
+
+                    Total
+
+                </span>
+
+                <strong>
+
+                    Rp
+                    <span id="totalPrice">
+
+                        0
+
+                    </span>
+
+                </strong>
+
+            </div>
+
+        </div>
+
+        <button
+
+        class="checkout-btn"
+
+        onclick="window.checkoutWhatsapp()">
+
+            <i class="fab fa-whatsapp"></i>
+
+            Checkout via WhatsApp
+
+        </button>
+
+    </div>
+
 </div>
-<!-- OVERLAY -->
+
+<div class="search-overlay" id="searchOverlay">
+
+<div class="search-header">
+
+<input
+type="text"
+id="searchPopup"
+placeholder="Cari Batik..."
+onkeyup="searchProductPopup()">
+
+<button onclick="closeSearch()">
+<i class="fas fa-times"></i>
+</button>
+
+</div>
+
+<div id="searchResult">
+
+</div>
+
+</div>
+
+<!-- =========================
+     OVERLAY
+========================= -->
+
 <div
-    id="overlay"
-    class="overlay"
-    onclick="toggleCart()">
+
+id="overlay"
+
+class="overlay"
+
+onclick="toggleCart()">
+
 </div>
-<!-- FOOTER -->
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
-    <h3>Ajra Batik</h3>
-    <p>
-        Batik Modern & Tradisional Berkualitas
-    </p>
-    <p>
-        © 2026 Ajra Batik
-    </p>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <img
+            src="images/logo.png.jpeg"
+            alt="Ajra Batik">
+
+            <h2>
+
+                Ajra Batik
+
+            </h2>
+
+            <p>
+
+                Batik Premium Indonesia
+                dengan kualitas terbaik
+                untuk segala kesempatan.
+
+            </p>
+
+        </div>
+
+        <div class="footer-menu">
+
+            <h4>
+
+                Menu
+
+            </h4>
+
+            <a href="#">
+
+                Beranda
+
+            </a>
+
+            <a href="#produk">
+
+                Produk
+
+            </a>
+
+            <a href="#tentang">
+
+                Tentang
+
+            </a>
+
+            <a href="#kontak">
+
+                Kontak
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 Ajra Batik • All Rights Reserved
+
+    </div>
+
 </footer>
+
+<div id="toast" class="toast">
+
+    <i class="fa-solid fa-circle-check"></i>
+
+    <span id="toastText"></span>
+
+</div>
+
 <script>
-    function toggleCart() {
-        document
-            .getElementById("cartSidebar")
-            .classList
-            .toggle("active");
-        document
-            .getElementById("overlay")
-            .classList
-            .toggle("active");
-    }
-    function toggleMenu() {
-        document
-            .querySelector(".nav-links")
-            .classList
-            .toggle("active");
-    }
+
+function toggleCart(){
+
+document
+
+.getElementById("cartSidebar")
+
+.classList.toggle("active");
+
+document
+
+.getElementById("overlay")
+
+.classList.toggle("active");
+
+}
+
+function toggleMenu(){
+
+document
+
+.querySelector(".nav-links")
+
+.classList.toggle("active");
+
+}
+
 </script>
+
 <script
 type="module"
 src="app.js">
+
 </script>
 
-<div id="toast" class="toast">
-    <i class="fas fa-circle-check"></i>
-    <span id="toastText"></span>
-</div>
-
 </body>
+
 </html>

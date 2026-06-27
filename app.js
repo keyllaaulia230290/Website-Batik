@@ -467,3 +467,15 @@ Rp ${item.price.toLocaleString("id-ID")}
 
   window.location.href = `https://wa.me/${nomorAdmin}?text=${message}`;
 };
+
+function openSearch() {
+    document
+        .getElementById("searchOverlay")
+        .classList.add("active");
+}
+
+function closeSearch() {
+    document
+        .getElementById("searchOverlay")
+        .classList.remove("active");
+}

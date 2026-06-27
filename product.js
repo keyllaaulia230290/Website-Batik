@@ -77,8 +77,17 @@ currentProduct.price.toLocaleString(
 document.getElementById(
 "detailStock"
 ).textContent =
-"Stok : " +
-currentProduct.stock;
+currentProduct.stock + " pcs";
+
+document.getElementById(
+"detailMaterial"
+).textContent =
+currentProduct.material || "-";
+
+document.getElementById(
+"detailShipping"
+).textContent =
+currentProduct.shipping || "-";
 document.getElementById(
 "detailDescription"
 ).innerHTML =
@@ -305,94 +314,293 @@ updateCart();
 
 function updateCart(){
 
-/* GET FRESH CART */
+    cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
 
-cart =
-JSON.parse(
-localStorage.getItem(
-"cart"
-)
-) || [];
+    const cartItems =
+    document.getElementById("cartItems");
 
-const cartItems =
-document.getElementById(
-"cartItems"
-);
+    const cartCount =
+    document.getElementById("cartCount");
 
-const cartCount =
-document.getElementById(
-"cartCount"
-);
+    const totalPrice =
+    document.getElementById("totalPrice");
 
-const totalPrice =
-document.getElementById(
-"totalPrice"
-);
+    if(!cartItems) return;
 
-if(!cartItems) return;
+    cartItems.innerHTML = "";
 
-cartItems.innerHTML =
-"";
+    let total = 0;
 
-let total = 0;
+    cart.forEach((item,index)=>{
 
-cart.forEach(
-(item,index)=>{
+        total += Number(item.price) * (item.qty || 1);
 
-total += Number(
-item.price
-);
+        cartItems.innerHTML += `
 
-cartItems.innerHTML += `
+        <div class="cart-item">
 
-<div class="cart-item">
+            <img
+            class="cart-image"
+            src="${item.images?.[0] || 'https://via.placeholder.com/90'}">
 
-<div>
+            <div class="cart-info">
 
-<strong>
-${item.name}
-</strong>
+                <strong>
+                    ${item.name}
+                </strong>
 
-<br>
+                <span>
+                    Rp ${Number(item.price).toLocaleString("id-ID")}
+                </span>
 
-Rp
-${Number(item.price)
-.toLocaleString("id-ID")}
+                <div class="qty-box">
+
+                    <button onclick="changeQty(${index},-1)">
+                        -
+                    </button>
+
+                    <span>
+                        ${item.qty || 1}
+                    </span>
+
+                    <button onclick="changeQty(${index},1)">
+                        +
+                    </button>
+
+                </div>
+
+                <div class="cart-bottom">
+
+    <button
+    class="remove-btn"
+    onclick="removeCart(${index})">
+
+        <i class="fas fa-trash"></i>
+
+        Hapus
+
+    </button>
 
 </div>
 
-<button
-class="remove-btn"
-onclick="removeCart(${index})">
+            </div>
 
-Hapus
+        </div>
 
-</button>
+        `;
 
-</div>
+    });
+
+    if(cartCount){
+
+        const totalQty = cart.reduce((sum,item)=>{
+
+            return sum + (item.qty || 1);
+
+        },0);
+
+        cartCount.textContent = totalQty;
+
+    }
+
+    if(totalPrice){
+
+        let finalTotal = total;
+
+if(discount > 0){
+
+    finalTotal =
+    total - (total * discount / 100);
+
+}
+
+totalPrice.textContent =
+Math.round(finalTotal)
+.toLocaleString("id-ID");
+
+    }
+
+}
+
+let discount = 0;
+
+window.applyPromo = function(){
+
+    const code =
+    document.getElementById("promoCode")
+    .value
+    .trim()
+    .toUpperCase();
+
+    const promoMessage =
+    document.getElementById("promoMessage");
+
+    if(code === "JUNEJULY"){
+
+        discount = 16;
+
+        promoMessage.innerHTML =
+        "✅ Promo berhasil! Diskon 16%";
+
+        promoMessage.style.color = "#16a34a";
+
+    }else{
+
+        discount = 0;
+
+        promoMessage.innerHTML =
+        "❌ Kode promo tidak valid";
+
+        promoMessage.style.color = "#dc2626";
+
+    }
+
+    updateCart();
+
+}
+
+window.changeQty = function(index,change){
+
+    cart[index].qty += change;
+
+    if(cart[index].qty <= 0){
+
+        cart.splice(index,1);
+
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    updateCart();
+
+}
+
+window.removeCart = function(index){
+
+    cart.splice(index,1);
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    updateCart();
+
+}
+
+/* ==========================
+CHECKOUT WHATSAPP
+========================== */
+
+window.checkoutWhatsapp = function(){
+
+    cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+    if(cart.length === 0){
+
+        alert("Keranjang masih kosong!");
+
+        return;
+
+    }
+
+    let total = 0;
+
+    let message =
+`Halo Admin Ajra Batik,
+
+Saya ingin memesan produk berikut:
 
 `;
 
-});
+    cart.forEach(item=>{
 
-/* UPDATE BADGE */
+        const qty = item.qty || 1;
 
-if(cartCount){
+        const subtotal =
+        Number(item.price) * qty;
 
-cartCount.textContent =
-cart.length;
+        total += subtotal;
 
-}
+        message +=
+`• ${item.name}
+  Harga : Rp ${Number(item.price).toLocaleString("id-ID")}
+  Jumlah : ${qty} pcs
+  Subtotal : Rp ${subtotal.toLocaleString("id-ID")}
 
-/* TOTAL */
+`;
 
-if(totalPrice){
+    });
 
-totalPrice.textContent =
-total.toLocaleString(
-"id-ID"
-);
+    /* PROMO */
 
-}
+    let discount = 0;
+
+    const promoInput =
+    document.getElementById("promoCode");
+
+    if(
+        promoInput &&
+        promoInput.value.trim().toUpperCase() ===
+        "JUNEJULY"
+    ){
+
+        discount = 16;
+
+    }
+
+    let finalTotal = total;
+
+    if(discount > 0){
+
+        finalTotal =
+        total -
+        (total * discount / 100);
+
+    }
+
+    message +=
+`----------------------------
+
+Total Belanja :
+Rp ${total.toLocaleString("id-ID")}
+
+`;
+
+    if(discount > 0){
+
+        message +=
+`Diskon :
+${discount}%
+
+`;
+
+    }
+
+    message +=
+`Total Bayar :
+Rp ${Math.round(finalTotal).toLocaleString("id-ID")}
+
+Terima kasih.`;
+
+    const nomorAdmin =
+    "6285864478882";
+
+    window.open(
+
+`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(message)}`,
+
+"_blank"
+
+    );
 
 }
