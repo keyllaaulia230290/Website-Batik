@@ -1,26 +1,22 @@
 import {
+  db,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "./firebase.js";
 
-db,
-collection,
-addDoc,
-getDocs,
-doc,
-deleteDoc,
-updateDoc
-
-}
-
-from "./firebase.js";
+const IMGBB_API_KEY = "84549778c66b6848b1f110b2cb3fc94d";
 
 /* ==========================
 LOGIN ADMIN
 ========================== */
 
-const adminUser =
-"admin";
+const adminUser = "admin";
 
-const adminPass =
-"admin123";
+const adminPass = "admin123";
 
 let products = [];
 
@@ -28,213 +24,93 @@ let products = [];
 LOGIN
 ========================== */
 
-window.loginAdmin =
-function(){
+window.loginAdmin = function () {
+  const username = document.getElementById("username").value;
 
-const username =
-document.getElementById(
-"username"
-).value;
+  const password = document.getElementById("password").value;
 
-const password =
-document.getElementById(
-"password"
-).value;
+  if (username === adminUser && password === adminPass) {
+    localStorage.setItem("adminLogin", "true");
 
-if(
-username === adminUser &&
-password === adminPass
-){
-
-localStorage.setItem(
-"adminLogin",
-"true"
-);
-
-showAdmin();
-
-}
-else{
-
-alert(
-"Username / password salah"
-);
-
-}
-
+    showAdmin();
+  } else {
+    alert("Username / password salah");
+  }
 };
 
-function showAdmin(){
+function showAdmin() {
+  document.getElementById("loginPage").style.display = "none";
 
-document.getElementById(
-"loginPage"
-).style.display =
-"none";
+  document.getElementById("adminPanel").style.display = "block";
 
-document.getElementById(
-"adminPanel"
-).style.display =
-"block";
-
-loadProducts();
-
+  loadProducts();
 }
 
-window.logoutAdmin =
-function(){
+window.logoutAdmin = function () {
+  localStorage.removeItem("adminLogin");
 
-localStorage.removeItem(
-"adminLogin"
-);
-
-location.reload();
-
+  location.reload();
 };
 
-if(
-localStorage.getItem(
-"adminLogin"
-) === "true"
-){
-
-showAdmin();
-
+if (localStorage.getItem("adminLogin") === "true") {
+  showAdmin();
 }
 
 /* ==========================
 COMPRESS IMAGE
 ========================== */
 
-function convertToBase64(file){
+async function uploadImage(file) {
+  const formData = new FormData();
 
-return new Promise(resolve=>{
+  formData.append("image", file);
 
-const reader =
-new FileReader();
+  const response = await fetch(
+    `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+    {
+      method: "POST",
+      body: formData,
+    },
+  );
 
-reader.readAsDataURL(file);
+  const result = await response.json();
 
-reader.onload = ()=>{
-
-const img =
-new Image();
-
-img.src =
-reader.result;
-
-img.onload = ()=>{
-
-const canvas =
-document.createElement(
-"canvas"
-);
-
-const ctx =
-canvas.getContext(
-"2d"
-);
-
-const maxWidth =
-800;
-
-let width =
-img.width;
-
-let height =
-img.height;
-
-if(width > maxWidth){
-
-height *=
-maxWidth / width;
-
-width =
-maxWidth;
-
-}
-
-canvas.width =
-width;
-
-canvas.height =
-height;
-
-ctx.drawImage(
-img,
-0,
-0,
-width,
-height
-);
-
-const compressed =
-canvas.toDataURL(
-"image/jpeg",
-0.5
-);
-
-resolve(compressed);
-
-};
-
-};
-
-});
-
+  return result.data.url;
 }
 
 /* ==========================
 LOAD PRODUK
 ========================== */
 
-async function loadProducts(){
+async function loadProducts() {
+  products = [];
 
-products = [];
+  const querySnapshot = await getDocs(collection(db, "products"));
 
-const querySnapshot =
-await getDocs(
-collection(
-db,
-"products"
-)
-);
+  querySnapshot.forEach((docu) => {
+    products.push({
+      firebaseId: docu.id,
 
-querySnapshot.forEach(docu=>{
+      ...docu.data(),
+    });
+  });
 
-products.push({
-
-firebaseId:
-docu.id,
-
-...docu.data()
-
-});
-
-});
-
-renderProducts();
-
+  renderProducts();
 }
 
 /* ==========================
 RENDER PRODUK
 ========================== */
 
-function renderProducts(){
+function renderProducts() {
+  const productList = document.getElementById("adminProductList");
 
-const productList =
-document.getElementById(
-"adminProductList"
-);
+  if (!productList) return;
 
-if(!productList) return;
+  productList.innerHTML = "";
 
-productList.innerHTML =
-"";
-
-products.forEach(product=>{
-
-productList.innerHTML += `
+  products.forEach((product) => {
+    productList.innerHTML += `
 
 <div class="admin-product-card">
 
@@ -296,281 +172,150 @@ Hapus
 </div>
 
 `;
-
-});
-
+  });
 }
 
 /* ==========================
 SAVE PRODUCT
 ========================== */
 
-window.saveProduct =
-async function(){
+window.saveProduct = async function () {
+  const productId = document.getElementById("productId").value;
 
-const productId =
-document.getElementById(
-"productId"
-).value;
+  const name = document.getElementById("productName").value;
 
-const name =
-document.getElementById(
-"productName"
-).value;
+  const category = document.getElementById("productCategory").value;
 
-const category =
-document.getElementById(
-"productCategory"
-).value;
+  const price = document.getElementById("productPrice").value;
 
-const price =
-document.getElementById(
-"productPrice"
-).value;
+  const stock = document.getElementById("productStock").value;
 
-const stock =
-document.getElementById(
-"productStock"
-).value;
+  const description = document.getElementById("productDescription").value;
 
-const description =
-document.getElementById(
-"productDescription"
-).value;
+  const files = document.getElementById("productImages").files;
 
-const files =
-document.getElementById(
-"productImages"
-).files;
+  if (!name || !category || !price || !stock) {
+    alert("Isi semua data");
 
-if(
-!name ||
-!category ||
-!price ||
-!stock
-){
+    return;
+  }
 
-alert(
-"Isi semua data"
-);
+  /* UPLOAD GAMBAR */
 
-return;
+  let images = [];
 
-}
+  for (const file of files) {
+    const imageUrl = await uploadImage(file);
 
-/* UPLOAD GAMBAR */
+    images.push(imageUrl);
+  }
 
-let images = [];
+  /* EDIT */
 
-for(let file of files){
+  if (productId) {
+    await updateDoc(
+      doc(db, "products", productId),
 
-const image =
-await convertToBase64(
-file
-);
+      {
+        name,
+        category,
 
-images.push(
-image
-);
+        price: Number(price),
 
-}
+        stock: Number(stock),
 
-/* EDIT */
+        description,
 
-if(productId){
+        images,
+      },
+    );
 
-await updateDoc(
+    alert("Produk berhasil diupdate");
+  } else {
 
-doc(
-db,
-"products",
-productId
-),
+  /* TAMBAH */
+    await addDoc(
+      collection(db, "products"),
 
-{
+      {
+        name,
+        category,
 
-name,
-category,
+        price: Number(price),
 
-price:
-Number(price),
+        stock: Number(stock),
 
-stock:
-Number(stock),
+        description,
 
-description,
+        images,
 
-images
+        createdAt: Date.now(),
+      },
+    );
 
-}
+    alert("Produk berhasil ditambah");
+  }
 
-);
+  resetForm();
 
-alert(
-"Produk berhasil diupdate"
-);
-
-}
-
-/* TAMBAH */
-
-else{
-
-await addDoc(
-
-collection(
-db,
-"products"
-),
-
-{
-
-name,
-category,
-
-price:
-Number(price),
-
-stock:
-Number(stock),
-
-description,
-
-images,
-
-createdAt:
-Date.now()
-
-}
-
-);
-
-alert(
-"Produk berhasil ditambah"
-);
-
-}
-
-resetForm();
-
-loadProducts();
-
+  loadProducts();
 };
 
 /* ==========================
 EDIT PRODUK
 ========================== */
 
-window.editProduct =
-function(firebaseId){
+window.editProduct = function (firebaseId) {
+  const product = products.find((p) => p.firebaseId === firebaseId);
 
-const product =
-products.find(
-p =>
-p.firebaseId ===
-firebaseId
-);
+  document.getElementById("productId").value = firebaseId;
 
-document.getElementById(
-"productId"
-).value =
-firebaseId;
+  document.getElementById("productName").value = product.name;
 
-document.getElementById(
-"productName"
-).value =
-product.name;
+  document.getElementById("productCategory").value = product.category;
 
-document.getElementById(
-"productCategory"
-).value =
-product.category;
+  document.getElementById("productPrice").value = product.price;
 
-document.getElementById(
-"productPrice"
-).value =
-product.price;
+  document.getElementById("productStock").value = product.stock;
 
-document.getElementById(
-"productStock"
-).value =
-product.stock;
+  document.getElementById("productDescription").value = product.description;
 
-document.getElementById(
-"productDescription"
-).value =
-product.description;
-
-window.scrollTo({
-
-top:0,
-behavior:"smooth"
-
-});
-
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 };
 
 /* ==========================
 DELETE PRODUK
 ========================== */
 
-window.deleteProduct =
-async function(firebaseId){
+window.deleteProduct = async function (firebaseId) {
+  const confirmDelete = confirm("Hapus produk?");
 
-const confirmDelete =
-confirm(
-"Hapus produk?"
-);
+  if (!confirmDelete) return;
 
-if(!confirmDelete)
-return;
+  await deleteDoc(doc(db, "products", firebaseId));
 
-await deleteDoc(
-
-doc(
-db,
-"products",
-firebaseId
-)
-
-);
-
-loadProducts();
-
+  loadProducts();
 };
 
 /* ==========================
 RESET FORM
 ========================== */
 
-function resetForm(){
+function resetForm() {
+  document.getElementById("productId").value = "";
 
-document.getElementById(
-"productId"
-).value = "";
+  document.getElementById("productName").value = "";
 
-document.getElementById(
-"productName"
-).value = "";
+  document.getElementById("productCategory").value = "";
 
-document.getElementById(
-"productCategory"
-).value = "";
+  document.getElementById("productPrice").value = "";
 
-document.getElementById(
-"productPrice"
-).value = "";
+  document.getElementById("productStock").value = "";
 
-document.getElementById(
-"productStock"
-).value = "";
+  document.getElementById("productDescription").value = "";
 
-document.getElementById(
-"productDescription"
-).value = "";
-
-document.getElementById(
-"productImages"
-).value = "";
-
+  document.getElementById("productImages").value = "";
 }

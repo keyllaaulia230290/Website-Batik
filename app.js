@@ -375,16 +375,16 @@ window.applyPromo = function () {
 
   /* PROMO */
 
-  if (code === "HAPPYJUNE") {
-    discountPercent = 6;
+  if (code === "JUNEJULY") {
+    discountPercent = 16;
 
-    promoMessage.textContent = "Promo berhasil! Diskon 6%";
+    promoMessage.textContent = "Promo berhasil! Diskon 16%";
 
     promoMessage.style.color = "green";
-  } else if (code === "HappyJune") {
-    discountPercent = 6;
+  } else if (code === "HAPPYJULY") {
+    discountPercent = 16;
 
-    promoMessage.textContent = "Promo berhasil! Diskon 6%";
+    promoMessage.textContent = "Promo berhasil! Diskon 16%";
 
     promoMessage.style.color = "green";
   } else {
