@@ -61,23 +61,29 @@ COMPRESS IMAGE
 ========================== */
 
 async function uploadImage(file) {
-  const formData = new FormData();
 
-  formData.append("image", file);
+    const formData = new FormData();
+    formData.append("image", file);
 
-  const response = await fetch(
-    `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
-    {
-      method: "POST",
-      body: formData,
-    },
-  );
+    const response = await fetch(
+        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        {
+            method: "POST",
+            body: formData
+        }
+    );
 
-  const result = await response.json();
+    const result = await response.json();
 
-  return result.data.url;
+    console.log(result);
+
+    if (!result.success) {
+        alert(result.error?.message || "Upload ImgBB gagal");
+        throw new Error("Upload gagal");
+    }
+
+    return result.data.display_url;
 }
-
 /* ==========================
 LOAD PRODUK
 ========================== */
