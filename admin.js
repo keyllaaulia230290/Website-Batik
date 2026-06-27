@@ -8,8 +8,6 @@ import {
   updateDoc,
 } from "./firebase.js";
 
-const IMGBB_API_KEY = "84549778c66b6848b1f110b2cb3fc94d";
-
 /* ==========================
 LOGIN ADMIN
 ========================== */
@@ -60,13 +58,16 @@ if (localStorage.getItem("adminLogin") === "true") {
 COMPRESS IMAGE
 ========================== */
 
-async function uploadImage(file) {
+async function uploadImage(file){
 
     const formData = new FormData();
-    formData.append("image", file);
+
+    formData.append("file", file);
+
+    formData.append("upload_preset", "ajra_upload");
 
     const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        "https://api.cloudinary.com/v1_1/dnlpptsub/image/upload",
         {
             method: "POST",
             body: formData
@@ -77,12 +78,8 @@ async function uploadImage(file) {
 
     console.log(result);
 
-    if (!result.success) {
-        alert(result.error?.message || "Upload ImgBB gagal");
-        throw new Error("Upload gagal");
-    }
+    return result.secure_url;
 
-    return result.data.display_url;
 }
 /* ==========================
 LOAD PRODUK

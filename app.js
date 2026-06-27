@@ -381,7 +381,7 @@ window.applyPromo = function () {
     promoMessage.textContent = "Promo berhasil! Diskon 16%";
 
     promoMessage.style.color = "green";
-  } else if (code === "HAPPYJULY") {
+  } else if (code === "JUNEJULY") {
     discountPercent = 16;
 
     promoMessage.textContent = "Promo berhasil! Diskon 16%";
