@@ -1,434 +1,242 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Detail Produk - Ajra Batik</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
 
-<body>
-
-<!-- =========================
+  <body>
+    <!-- =========================
      NAVBAR
 ========================= -->
 
-<nav class="navbar">
-
-    <div class="nav-left">
-
+    <nav class="navbar">
+      <div class="nav-left">
         <a href="index.html" class="logo">
+          <img src="images/logo.png.jpeg" alt="Ajra Batik" />
 
-            <img
-            src="images/logo.png.jpeg"
-            alt="Ajra Batik">
+          <div class="logo-text">
+            <h2>Ajra Batik</h2>
 
-            <div class="logo-text">
-
-                <h2>Ajra Batik</h2>
-
-                <small>
-                    Premium Batik Indonesia
-                </small>
-
-            </div>
-
+            <small> Premium Batik Indonesia </small>
+          </div>
         </a>
+      </div>
 
-    </div>
-
-    <ul class="nav-links">
-
+      <ul class="nav-links">
         <li>
-
-            <a href="index.html">
-
-                Beranda
-
-            </a>
-
+          <a href="index.html"> Beranda </a>
         </li>
 
         <li>
-
-            <a href="index.html#produk">
-
-                Produk
-
-            </a>
-
+          <a href="index.html#produk"> Produk </a>
         </li>
 
         <li>
-
-            <a href="index.html#tentang">
-
-                Tentang
-
-            </a>
-
+          <a href="index.html#tentang"> Tentang </a>
         </li>
 
         <li>
-
-            <a href="index.html#kontak">
-
-                Kontak
-
-            </a>
-
+          <a href="index.html#kontak"> Kontak </a>
         </li>
+      </ul>
 
-    </ul>
-
-    <div class="nav-right">
-
+      <div class="nav-right">
         <a href="index.html" class="search-btn">
-
-            <i class="fas fa-arrow-left"></i>
-
+          <i class="fas fa-arrow-left"></i>
         </a>
 
-        <button
-        class="cart-icon"
-        onclick="toggleCart()">
+        <button class="cart-icon" onclick="toggleCart()">
+          <i class="fas fa-shopping-bag"></i>
 
-            <i class="fas fa-shopping-bag"></i>
-
-            <span id="cartCount">
-
-                0
-
-            </span>
-
+          <span id="cartCount"> 0 </span>
         </button>
+      </div>
+    </nav>
 
-    </div>
-
-</nav>
-
-<!-- =========================
+    <!-- =========================
      PRODUCT DETAIL
 ========================= -->
 
-<section class="detail-section">
-
-    <div class="detail-container">
-
+    <section class="detail-section">
+      <div class="detail-container">
         <!-- LEFT -->
 
         <div class="detail-left">
+          <img id="mainImage" class="main-image" />
 
-            <img
-            id="mainImage"
-            class="main-image">
-
-            <div
-            id="thumbnailContainer"
-            class="thumbnail-container">
-
-            </div>
-
+          <div id="thumbnailContainer" class="thumbnail-container"></div>
         </div>
 
         <!-- RIGHT -->
 
         <div class="detail-right">
+          <span id="detailCategory" class="detail-category"> </span>
 
-            <span
-            id="detailCategory"
-            class="detail-category">
-            </span>
+          <h1 id="detailName" class="detail-title"></h1>
 
-            <h1
-            id="detailName"
-            class="detail-title">
-            </h1>
+          <div class="detail-rating">
+            <span>⭐ 4.9</span>
+          </div>
 
-            <div class="detail-rating">
+          <div id="detailPrice" class="detail-price"></div>
 
-                <span>⭐ 4.9</span>
+          <div class="product-information">
+            <h3>Informasi Produk</h3>
 
-                
+            <div class="info-row">
+              <span>Kategori</span>
 
+              <strong id="detailCategory"></strong>
             </div>
 
-            <div
-            id="detailPrice"
-            class="detail-price">
+            <div class="info-row">
+              <span>Bahan</span>
+
+              <strong id="detailMaterial"></strong>
             </div>
 
-           <div class="product-information">
+            <div class="info-row">
+              <span>Stok</span>
 
-    <h3>
-
-        Informasi Produk
-
-    </h3>
-
-    <div class="info-row">
-
-        <span>Kategori</span>
-
-        <strong id="detailCategory"></strong>
-
-    </div>
-
-    <div class="info-row">
-
-        <span>Bahan</span>
-
-        <strong id="detailMaterial"></strong>
-
-    </div>
-
-    <div class="info-row">
-
-        <span>Stok</span>
-
-        <strong id="detailStock"></strong>
-
-    </div>
-
-    <div class="info-row">
-
-        <span>Pengiriman</span>
-
-        <strong id="detailShipping"></strong>
-
-    </div>
-
-</div>
-
-            <div class="qty-wrapper">
-
-                <h3>Jumlah</h3>
-
-                <div class="qty-selector">
-
-                    <button onclick="decreaseDetailQty()">
-                        -
-                    </button>
-
-                    <span id="detailQty">
-                        1
-                    </span>
-
-                    <button onclick="increaseDetailQty()">
-                        +
-                    </button>
-
-                </div>
-
+              <strong id="detailStock"></strong>
             </div>
 
-            <div class="detail-buttons">
+            <div class="info-row">
+              <span>Pengiriman</span>
 
-                <button
-                class="add-cart-btn"
-                onclick="addDetailToCart()">
-
-                    <i class="fas fa-shopping-cart"></i>
-
-                    Tambah Keranjang
-
-                </button>
-
-                <button
-                class="buy-now-btn"
-                onclick="buyNow()">
-
-                    <i class="fas fa-bolt"></i>
-
-                    Beli Sekarang
-
-                </button>
-
+              <strong id="detailShipping"></strong>
             </div>
+          </div>
 
-            <div class="detail-description">
+          <div class="qty-wrapper">
+            <h3>Jumlah</h3>
 
-                <h3>
+            <div class="qty-selector">
+              <button onclick="decreaseDetailQty()">-</button>
 
-                    Deskripsi Produk
+              <span id="detailQty"> 1 </span>
 
-                </h3>
-
-                <p id="detailDescription">
-
-                </p>
-
+              <button onclick="increaseDetailQty()">+</button>
             </div>
+          </div>
 
+          <div class="detail-buttons">
+            <button class="add-cart-btn" onclick="addDetailToCart()">
+              <i class="fas fa-shopping-cart"></i>
+
+              Tambah Keranjang
+            </button>
+
+            <button class="buy-now-btn" onclick="buyNow()">
+              <i class="fas fa-bolt"></i>
+
+              Beli Sekarang
+            </button>
+          </div>
+
+          <div class="detail-description">
+            <h3>Deskripsi Produk</h3>
+
+            <p id="detailDescription"></p>
+          </div>
         </div>
+      </div>
+    </section>
 
-    </div>
-
-</section>
-
-
-<!-- =========================
+    <!-- =========================
      CART SIDEBAR
 ========================= -->
 
-<div
-id="cartSidebar"
-class="cart-sidebar">
-
-    <div class="cart-header">
-
+    <div id="cartSidebar" class="cart-sidebar">
+      <div class="cart-header">
         <div>
+          <h2>
+            <i class="fas fa-shopping-bag"></i>
 
-            <h2>
+            Keranjang
+          </h2>
 
-                <i class="fas fa-shopping-bag"></i>
-
-                Keranjang
-
-            </h2>
-
-            <small>
-
-                Produk pilihanmu
-
-            </small>
-
+          <small> Produk pilihanmu </small>
         </div>
 
-        <button
-        class="close-cart"
-        onclick="toggleCart()">
-
-            <i class="fas fa-xmark"></i>
-
+        <button class="close-cart" onclick="toggleCart()">
+          <i class="fas fa-xmark"></i>
         </button>
+      </div>
 
-    </div>
+      <div id="cartItems" class="cart-items"></div>
 
-    <div
-    id="cartItems"
-    class="cart-items">
-
-    </div>
-
-    <div class="cart-footer">
-
+      <div class="cart-footer">
         <div class="promo-card">
+          <label>
+            <i class="fas fa-ticket"></i>
 
-            <label>
+            Kode Promo
+          </label>
 
-                <i class="fas fa-ticket"></i>
+          <div class="promo-box">
+            <input
+              id="promoCode"
+              type="text"
+              placeholder="Masukkan kode promo"
+            />
 
-                Kode Promo
+            <button onclick="applyPromo()">Gunakan</button>
+          </div>
 
-            </label>
-
-            <div class="promo-box">
-
-                <input
-                id="promoCode"
-                type="text"
-                placeholder="Masukkan kode promo">
-
-                <button
-                onclick="applyPromo()">
-
-                    Gunakan
-
-                </button>
-
-            </div>
-
-            <small
-            id="promoMessage">
-
-            </small>
-
+          <small id="promoMessage"> </small>
         </div>
 
         <div class="summary-card">
+          <div class="summary-row">
+            <span> Total Belanja </span>
 
-            <div class="summary-row">
-
-                <span>
-
-                    Total Belanja
-
-                </span>
-
-                <strong>
-
-                    Rp
-                    <span id="totalPrice">
-
-                        0
-
-                    </span>
-
-                </strong>
-
-            </div>
-
+            <strong>
+              Rp
+              <span id="totalPrice"> 0 </span>
+            </strong>
+          </div>
         </div>
 
-        <button
-        class="checkout-btn"
-        onclick="window.checkoutWhatsapp()">
+        <button class="checkout-btn" onclick="window.checkoutWhatsapp()">
+          <i class="fab fa-whatsapp"></i>
 
-            <i class="fab fa-whatsapp"></i>
-
-            Checkout via WhatsApp
-
+          Checkout via WhatsApp
         </button>
-
+      </div>
     </div>
 
-</div>
-
-<!-- =========================
+    <!-- =========================
      OVERLAY
 ========================= -->
 
-<div
-id="overlay"
-class="overlay"
-onclick="toggleCart()">
+    <div id="overlay" class="overlay" onclick="toggleCart()"></div>
 
-</div>
-
-<!-- =========================
+    <!-- =========================
      TOAST
 ========================= -->
 
-<div
-id="toast"
-class="toast">
+    <div id="toast" class="toast">
+      <i class="fas fa-circle-check"></i>
 
-    <i class="fas fa-circle-check"></i>
+      <span id="toastText"> </span>
+    </div>
 
-    <span id="toastText">
-
-    </span>
-
-</div>
-
-<script
-type="module"
-src="product.js">
-
-</script>
-
-</body>
-
+    <script type="module" src="product.js"></script>
+  </body>
 </html>
-
